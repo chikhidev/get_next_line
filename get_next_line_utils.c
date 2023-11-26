@@ -67,15 +67,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	char	*substring;
+	size_t	str_len;
+
+	if (!s)
+		return (NULL);
+	str_len = ft_strlen(s);
+	if (start > str_len || *s == '\0')
+		return (ft_strdup(""));
+	if (len > str_len - start)
+		len = str_len - start;
+	substring = malloc(sizeof(char) * (len + 1));
+	if (!substring)
+		return (NULL);
+	ft_memcpy(substring, s + start, len);
+	substring[len] = '\0';
+	return (substring);
 }

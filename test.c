@@ -19,6 +19,7 @@ int main()
 		free(line);
 	}
 
+
 	close(fd);
 
 	return 0;
