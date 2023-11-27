@@ -7,6 +7,14 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+typedef struct store_s
+{
+	int		bytes;
+	char	buff[BUFFER_SIZE + 1];
+	char	*temp;
+	char	*new_line_pos;
+} store_t;
+
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);

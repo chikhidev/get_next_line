@@ -40,41 +40,44 @@ char *get_remaining(char *start)
 	return (res);
 }
 
-typedef struct store_s
+char	*extract_line(char **saved, store_t store)
 {
-	int		bytes;
-	char	buff[BUFFER_SIZE + 1];
-	char	*temp;
-	char	*new_line_pos;
-} store_t;
+	char	*line;
 
-char	*get_next_line(int fd)
+	line = ft_substr(*saved, 0, store.new_line_pos - *saved);
+	store.temp = get_remaining(store.new_line_pos + 1);
+	if (store.temp == NULL)
+		return (NULL);
+	free(*saved);
+	*saved = store.temp;
+	if (store.bytes == 0)
+		return (*saved);
+	return (line);
+}
+
+char	*get_line(int fd, char **saved)
 {
-	static char *saved;
-	char		*line;
-	store_t store;
+	store_t	store;
 
-	saved = NULL;
 	store.bytes = read(fd, store.buff, BUFFER_SIZE);
-	while (store.bytes > 0)
+	while (store.bytes > 0 || **saved)
 	{
 		store.buff[store.bytes] = '\0';
-		store.temp = ft_strjoin(saved, store.buff);
-		if (saved)
-			free(saved);
-		saved = store.temp;
-		store.new_line_pos = ft_strchr(saved, '\n');
+		store.temp = ft_strjoin(*saved, store.buff);
+		if (*saved)
+			free(*saved);
+		*saved = store.temp;
+		store.new_line_pos = ft_strchr(*saved, '\n');
 		if (store.new_line_pos != NULL)
-		{
-			line = ft_substr(saved, 0, store.new_line_pos - saved);
-			store.temp = get_remaining(store.new_line_pos);
-			if (store.temp == NULL)
-				return (NULL);
-			free(saved);
-			saved = store.temp;
-			return (line);
-		}
+			return (extract_line(saved, store));
 		store.bytes = read(fd, store.buff, BUFFER_SIZE);
 	}
 	return (NULL);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*saved = NULL;
+
+	return (get_line(fd, &saved));
 }

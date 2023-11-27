@@ -13,10 +13,12 @@ int main()
 		return 1;
 	}
 
+	int  i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("%s\n", line);
+		printf("line %d=> %s\n", i, line);
 		free(line);
+		i++;
 	}
 
 	close(fd);
