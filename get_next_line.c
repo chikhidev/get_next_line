@@ -12,27 +12,14 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
-}
-
 char	*get_remaining(char *start)
 {
 	char	*res;
 	int		i;
 
-	i = ft_strlen(start);
+	i = 0;
+	while (start[i])
+		i++;
 	res = malloc(i + 1);
 	if (!res)
 		return (NULL);
@@ -41,7 +28,7 @@ char	*get_remaining(char *start)
 	return (res);
 }
 
-char	*extract_line(char **saved, store_t store)
+char	*extract_line(char **saved, t_store store)
 {
 	char	*line;
 
@@ -56,7 +43,7 @@ char	*extract_line(char **saved, store_t store)
 
 char	*get_line(int fd, char **saved, int condition, int *stop)
 {
-	store_t	store;
+	t_store	store;
 
 	if (condition && !*stop)
 	{

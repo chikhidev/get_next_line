@@ -36,7 +36,9 @@ char	*ft_strdup(const char *s1)
 	const char	*clone;
 	int			len;
 
-	len = ft_strlen(s1);
+	len = 0;
+	while (s1[len])
+		len++;
 	clone = malloc(sizeof(char) * (len + 1));
 	if (!clone)
 		return (NULL);
@@ -85,4 +87,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_memcpy(substring, s + start, len);
 	substring[len] = '\0';
 	return (substring);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
 }
