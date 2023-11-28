@@ -4,15 +4,13 @@
 
 int main()
 {
-	int		fd = open("tests/test_file1.txt", O_RDONLY);
 	char	*line;
+	int fd = 	open("tests/test_file1.txt", O_RDONLY);
 
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		return 1;
-	}
+	if (fd < 0)
+		return (1);
 
+	close(fd);
 	int  i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -20,8 +18,6 @@ int main()
 		free(line);
 		i++;
 	}
-
-	close(fd);
 
 	return 0;
 }
