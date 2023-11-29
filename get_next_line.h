@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <sys/select.h>
 
 typedef struct s_store

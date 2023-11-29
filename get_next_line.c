@@ -41,27 +41,40 @@ char	*extract_line(char **saved, t_store store)
 	return (line);
 }
 
-char	*get_line(int fd, char **saved, int condition, int *stop)
+int	process(t_store *store, int fd, char **saved)
+{
+	store->bytes = read(fd, store->buff, BUFFER_SIZE);
+	if (store->bytes == -1)
+		return (0);
+	if (store->bytes == 0 && (!*saved || !**saved))
+	{
+		free(*saved);
+		return (0);
+	}
+	store->buff[store->bytes] = '\0';
+	store->temp = ft_strjoin(*saved, store->buff);
+	free(*saved);
+	*saved = store->temp;
+	return (1);
+}
+
+char	*post_line(int fd, char **saved, int condition, int *stop)
 {
 	t_store	store;
 
+	store.bytes = 0;
 	if (condition && !*stop)
 	{
-		store.bytes = read(fd, store.buff, BUFFER_SIZE);
-		if (store.bytes == -1)
+		if (process(&store, fd, saved) == 0)
 			return (NULL);
-		store.buff[store.bytes] = '\0';
-		store.temp = ft_strjoin(*saved, store.buff);
-		free(*saved);
-		*saved = store.temp;
 	}
 	store.new_line_pos = ft_strchr(*saved, '\n');
 	if (store.new_line_pos)
 		return (extract_line(saved, store));
 	if (condition && !*stop)
-		return (get_line(fd, saved, (store.bytes > 0), stop));
+		return (post_line(fd, saved, (store.bytes > 0), stop));
 	if (*saved && **saved != '\0' && store.bytes == 0 && !*stop)
-		return (get_line(fd, saved, 0, stop));
+		return (post_line(fd, saved, 0, stop));
 	if (*saved && !condition && !*stop)
 	{
 		*stop = 1;
@@ -75,7 +88,7 @@ char	*get_next_line(int fd)
 	static char	*saved;
 	static int	stop;
 
-	if (fd < 0 || fd >= _SC_OPEN_MAX || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= _SC_OPEN_MAX || BUFFER_SIZE <= 0 || BUFFER_SIZE > SSIZE_MAX)
 		return (NULL);
-	return (get_line(fd, &saved, 1, &stop));
+	return (post_line(fd, &saved, 1, &stop));
 }
