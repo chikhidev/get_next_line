@@ -24,6 +24,7 @@
 typedef struct s_store
 {
 	int		bytes;
+	int		signal;
 	char	buff[BUFFER_SIZE + 1];
 	char	*temp;
 	char	*new_line_pos;

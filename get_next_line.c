@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "get_next_line.h"
 
 char	*get_remaining(char *start)
@@ -51,6 +52,11 @@ int	process(t_store *store, int fd, char **saved)
 		free(*saved);
 		return (0);
 	}
+	// if (store->bytes == 1 && !*saved && BUFFER_SIZE == 1)
+	// {
+	// 	store->temp = ft_strdup(store->buff);
+	// 	return (-1);
+	// }
 	store->buff[store->bytes] = '\0';
 	store->temp = ft_strjoin(*saved, store->buff);
 	free(*saved);
@@ -65,11 +71,14 @@ char	*post_line(int fd, char **saved, int condition, int *stop)
 	store.bytes = 0;
 	if (condition && !*stop)
 	{
-		if (process(&store, fd, saved) == 0)
+		store.signal = process(&store, fd, saved);
+		if (store.signal == 0)
 			return (NULL);
+		else if (store.signal == -1)
+			return (store.temp);
 	}
 	store.new_line_pos = ft_strchr(*saved, '\n');
-	if (store.new_line_pos)
+	if (store.new_line_pos && store.signal != -1)
 		return (extract_line(saved, store));
 	if (condition && !*stop)
 		return (post_line(fd, saved, (store.bytes > 0), stop));
