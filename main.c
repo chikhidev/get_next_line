@@ -2,7 +2,7 @@
 
 int main()
 {
-    int fd = open("tests/1char_file.txt", O_RDWR);
+    int fd = open("tests/test_file1.txt", O_RDWR);
     char *line;
 
     while ((line = get_next_line(fd)) != NULL)

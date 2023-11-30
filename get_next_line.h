@@ -21,6 +21,10 @@
 #include <limits.h>
 #include <sys/select.h>
 
+# ifndef BUFFER_SIZE
+#	define BUFFER_SIZE 10
+#endif
+
 typedef struct s_store
 {
 	int		bytes;
@@ -28,6 +32,7 @@ typedef struct s_store
 	char	buff[BUFFER_SIZE + 1];
 	char	*temp;
 	char	*new_line_pos;
+	char	*line;
 } t_store;
 
 char	*ft_strdup(const char *s1);
@@ -35,6 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *str);
 
 char	*get_next_line(int fd);
 
