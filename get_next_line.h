@@ -6,7 +6,7 @@
 /*   By: abchikhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 21:35:19 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/11/28 21:35:22 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:45:27 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,18 @@
 
 # ifndef BUFFER_SIZE
 #	define BUFFER_SIZE 10
+# endif
+
+# if BUFFER_SIZE > 2147483646
+	#undef BUFFER_SIZE
+	#define BUFFER_SIZE 0
 #endif
 
 typedef struct s_store
 {
 	int		bytes;
 	int		signal;
-	char	buff[BUFFER_SIZE + 1];
+	char	*buff;
 	char	*temp;
 	char	*new_line_pos;
 	char	*line;
