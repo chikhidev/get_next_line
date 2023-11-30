@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abchikhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:54:39 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/11/30 17:44:33 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:09:28 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,4 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_memcpy(substring, s + start, len);
 	substring[len] = '\0';
 	return (substring);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
 }

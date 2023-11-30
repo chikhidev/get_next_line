@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abchikhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 21:35:19 by abchikhi          #+#    #+#             */
-/*   Updated: 2023/11/30 17:45:27 by abchikhi         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:07:08 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 # include <stddef.h>
 # include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <sys/select.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <sys/select.h>
 
 # ifndef BUFFER_SIZE
-#	define BUFFER_SIZE 10
+#  define BUFFER_SIZE 10
 # endif
 
 # if BUFFER_SIZE > 2147483646
-	#undef BUFFER_SIZE
-	#define BUFFER_SIZE 0
-#endif
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 0
+# endif
 
 typedef struct s_store
 {
@@ -38,7 +38,7 @@ typedef struct s_store
 	char	*temp;
 	char	*new_line_pos;
 	char	*line;
-} t_store;
+}	t_store;
 
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
